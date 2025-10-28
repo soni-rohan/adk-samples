@@ -15,12 +15,12 @@ These instructions where to find the values for your environment variables.
 
 3. OAuth Client Credentials
 
-a. In your Cloud Shell, first run the following command:
+* In your Cloud Shell, first run the following command:
 ```bash
 adk web
 ```
 
 Click on the hyperlink, e.g,: http://127.0.0.1:8000 in your terminal that opens a local host. Copy the URI in the web server that opens - this is your `REDIRECT_URI`. It typically looks like https://8080-dot-1234567-tp.cloudshell.dev. You need to update the URI in the env.sh file. 
 
-b. Create the OAuth Client in Google Cloud Console:Navigate to the APIs & Services -> Credentials page in the Google Cloud console. Click + Create Credentials -> OAuth client ID. For Application Type, select Web application. Under Authorized redirect URIs, click + Add URI and paste the URL you copied from the step above. Click Create. Copy the generated `CLIENT_ID` and `CLIENT_SECRET` and update the env.sh file. 
+* Create the OAuth Client in Google Cloud Console:Navigate to the APIs & Services -> Credentials page in the Google Cloud console. Click + Create Credentials -> OAuth client ID. For Application Type, select Web application. Under Authorized redirect URIs, click + Add URI and paste the URL you copied from the step above. Click Create. Copy the generated `CLIENT_ID` and `CLIENT_SECRET` and update the env.sh file. 
 
