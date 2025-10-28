@@ -19,16 +19,17 @@ To try the sample, first follow the instructions below to deploy the API specs, 
 
 1. [Provision Apigee X](https://cloud.google.com/apigee/docs/api-platform/get-started/provisioning-intro)
 2. [Provision Apigee API hub](https://cloud.google.com/apigee/docs/apihub/provision)
-3. Configure [external access](https://cloud.google.com/apigee/docs/api-platform/get-started/configure-routing#external-access) for API traffic to your Apigee X instance
-4. Enable Vertex AI in your project
-5. Make sure the following tools are available in your terminal's $PATH (Cloud Shell has these preconfigured)
+3. [Provision Application Integration] (https://docs.cloud.google.com/application-integration/docs/setup-application-integration)
+4. Configure [external access](https://cloud.google.com/apigee/docs/api-platform/get-started/configure-routing#external-access) for API traffic to your Apigee X instance
+5. Enable Vertex AI in your project
+6. Make sure the following tools are available in your terminal's $PATH (Cloud Shell has these preconfigured)
     - [gcloud SDK](https://cloud.google.com/sdk/docs/install)
     - [apigeecli](https://github.com/apigee/apigeecli)
     - unzip
     - curl
     - jq
-6. Python 3.12+
-7. Google Cloud Project with the following roles assigned
+7. Python 3.12+
+8. Google Cloud Project with the following roles assigned
   - Apigee Organization Admin
   - Service Usage Consumer
   - Logs Viewer
