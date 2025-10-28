@@ -1,0 +1,1186 @@
+{
+  "name": "projects/7447300960/locations/us-east1/integrations/asset-retrieval-adk/versions/0e881390-2ce2-4575-8771-f8368d84ed17",
+  "updateTime": "2025-10-28T00:04:47.467Z",
+  "lockHolder": "admin@sonirohan.altostrat.com",
+  "createTime": "2025-10-23T02:03:57.079Z",
+  "lastModifierEmail": "admin@sonirohan.altostrat.com",
+  "triggerConfigs": [{
+    "label": "API Trigger",
+    "startTasks": [{
+      "taskId": "11",
+      "condition": "$scope$ \u003d \"projects\" AND $function$ \u003d \"networks\"",
+      "displayName": "Scope \u003d Projects + Method \u003d Networks"
+    }, {
+      "taskId": "26",
+      "condition": "$scope$ \u003d \"organizations\" AND $function$ \u003d \"networks\"",
+      "displayName": "Scope \u003d Organizations + Method \u003d Networks"
+    }, {
+      "taskId": "14",
+      "condition": "$scope$ \u003d \"organizations\" AND $function$ \u003d \"projects\"",
+      "displayName": "Scope \u003d Organizations"
+    }, {
+      "taskId": "5",
+      "condition": "$scope$ \u003d \"projects\" AND $function$ \u003d \"projects\"",
+      "displayName": "Scope \u003d Projects + Method \u003d Projects"
+    }],
+    "properties": {
+      "Trigger name": "asset-retrieval-adk"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/asset-retrieval-adk",
+    "position": {
+      "x": 1100,
+      "y": 45
+    },
+    "inputVariables": {
+      "names": ["function", "authorization", "scope", "scope_OUTPUT", "cloud_assets_rest_api", "cloud_resource_rest_api", "ldap", "query_param"]
+    },
+    "outputVariables": {
+      "names": ["response"]
+    }
+  }],
+  "taskConfigs": [{
+    "task": "FieldMappingTask",
+    "taskId": "11",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$scope$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$`ProjectId`$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$scope_OUTPUT$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_asset_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$scope_OUTPUT$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":searchAllResources\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_assets_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "12"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 140,
+      "y": 181
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "12",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_12_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"authorization\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$authorization$\"\n    }\n  }]\n}"
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_12_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_12_responseStatus`$"]
+          }
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$cloud_assets_rest_api$"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"assetTypes\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"compute.googleapis.com/Network\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "13"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Networks (Scope \u003d Projects) API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 140,
+      "y": 317
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "13",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_12_responseBody`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$response$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 140,
+      "y": 453
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "14",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_resource_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"projects/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$`ProjectId`$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":getAncestry\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_resource_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "15"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 181
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "15",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_15_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"authorization\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$authorization$\"\n    }\n  }]\n}"
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_15_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "POST"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_15_responseStatus`$"]
+          }
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$cloud_resource_rest_api$"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings"
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "16"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "POST Org ID",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 860,
+      "y": 317
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "16",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_15_responseBody`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$org_JSON$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "17"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 860,
+      "y": 453
+    }
+  }, {
+    "task": "JavaScriptTask",
+    "taskId": "17",
+    "parameters": {
+      "javaScriptEngine": {
+        "key": "javaScriptEngine",
+        "value": {
+          "stringValue": "V8"
+        }
+      },
+      "script": {
+        "key": "script",
+        "value": {
+          "stringValue": "function executeScript(event) {\n  // Retrieve the org_JSON parameter.\n  var orgJson \u003d event.getParameter(\"org_JSON\");\n\n  // Extract the organization ID from the JSON structure.\n  var organizationId \u003d orgJson.ancestor[1].resourceId.id;\n\n  // Set the extracted organization ID to a parameter named \"organization_ID\".\n  event.setParameter(\"organization_ID\", organizationId);\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "20",
+      "condition": "$function$ \u003d \"projects\"",
+      "displayName": "Method \u003d Projects"
+    }, {
+      "taskId": "21",
+      "condition": "$function$ \u003d \"networks\"",
+      "displayName": "Method \u003d Networks"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Extract Organization ID",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 860,
+      "y": 589
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "2",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"authorization\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$authorization$\"\n    }\n  }]\n}"
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_2_responseStatus`$"]
+          }
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$cloud_assets_rest_api$"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"assetTypes\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"cloudresourcemanager.googleapis.com/Project\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"query\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$query_param$\"\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "8"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Projects (Scope \u003d Projects ) API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1580,
+      "y": 317
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "20",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$scope$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$organization_ID$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$scope_OUTPUT$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_asset_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$scope_OUTPUT$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":searchAllIamPolicies\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_assets_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"policy:\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$ldap$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$query_param$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "22"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 725
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "21",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$scope$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$organization_ID$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$scope_OUTPUT$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_asset_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$scope_OUTPUT$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":searchAllResources\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_assets_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "23"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1100,
+      "y": 725
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "22",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_22_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"authorization\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$authorization$\"\n    }\n  }]\n}"
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_22_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_22_responseStatus`$"]
+          }
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$cloud_assets_rest_api$"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"assetTypes\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"cloudresourcemanager.googleapis.com/Project\"\n      }\n    }\n  }, {\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"query\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$query_param$\"\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "24"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Projects (Scope \u003d Org) API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 861
+    }
+  }, {
+    "task": "GenericRestV2Task",
+    "taskId": "23",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_23_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"authorization\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$authorization$\"\n    }\n  }]\n}"
+        }
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_23_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "GET"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_23_responseStatus`$"]
+          }
+        }
+      },
+      "timeout": {
+        "key": "timeout",
+        "value": {
+          "intValue": "0"
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "$cloud_assets_rest_api$"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"assetTypes\"\n      }\n    },\n    \"value\": {\n      \"literalValue\": {\n        \"stringValue\": \"compute.googleapis.com/Network\"\n      }\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "jsonAdditionalHeaders": {
+        "key": "jsonAdditionalHeaders",
+        "value": {
+          "jsonValue": "null"
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "25"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Networks (Scope \u003d Org) API",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1100,
+      "y": 861
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "24",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_22_responseBody`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$Projects_JSON_Schema$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$Projects_JSON_Schema$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$response_JSON$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Filtered Response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 620,
+      "y": 997
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "25",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_23_responseBody`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$response$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1100,
+      "y": 997
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "26",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_resource_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"projects/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$`ProjectId`$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":getAncestry\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_resource_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "15"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1100,
+      "y": 181
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "5",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$scope$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"/\"\n              }\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$`ProjectId`$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$scope_OUTPUT$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$cloud_asset_base_url$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$scope_OUTPUT$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \":searchAllIamPolicies\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$cloud_assets_rest_api$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"policy:\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$ldap$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$query_param$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "2"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Map Scope + Rest API URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1580,
+      "y": 181
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "8",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_2_responseBody`$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$Projects_JSON_Schema$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }, {\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$Projects_JSON_Schema$\"\n        }\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$response_JSON$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Filtered Response",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": 1580,
+      "y": 453
+    }
+  }],
+  "integrationParameters": [{
+    "key": "`ExecutionMode`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ExecutionMode`",
+    "isTransient": true
+  }, {
+    "key": "`ErrorInfo`",
+    "dataType": "JSON_VALUE",
+    "defaultValue": {
+      "jsonValue": "{\n  \"message\": \"\",\n  \"code\": 0.0\n}"
+    },
+    "displayName": "`ErrorInfo`",
+    "isTransient": true,
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"code\": {\n      \"type\": \"number\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}"
+  }, {
+    "key": "`ExecutionId`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ExecutionId`",
+    "isTransient": true
+  }, {
+    "key": "`IntegrationName`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`IntegrationName`",
+    "isTransient": true
+  }, {
+    "key": "`Region`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Region`",
+    "isTransient": true
+  }, {
+    "key": "`ProjectId`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`ProjectId`",
+    "isTransient": true
+  }, {
+    "key": "function",
+    "dataType": "STRING_VALUE",
+    "displayName": "function",
+    "inputOutputType": "IN"
+  }, {
+    "key": "`Task_2_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseHeader`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "`Task_2_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseBody`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "`Task_2_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_2_responseStatus`",
+    "isTransient": true,
+    "producer": "1_2"
+  }, {
+    "key": "dynamicAuthConfig",
+    "dataType": "JSON_VALUE",
+    "displayName": "dynamicAuthConfig"
+  }, {
+    "key": "response",
+    "dataType": "STRING_VALUE",
+    "displayName": "response",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "authorization",
+    "dataType": "STRING_VALUE",
+    "displayName": "authorization",
+    "inputOutputType": "IN",
+    "masked": true
+  }, {
+    "key": "scope",
+    "dataType": "STRING_VALUE",
+    "displayName": "scope",
+    "inputOutputType": "IN"
+  }, {
+    "key": "cloud_asset_base_url",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "https://cloudasset.googleapis.com/v1/"
+    },
+    "displayName": "cloud_asset_base_url"
+  }, {
+    "key": "scope_OUTPUT",
+    "dataType": "STRING_VALUE",
+    "displayName": "scope_OUTPUT",
+    "inputOutputType": "IN"
+  }, {
+    "key": "cloud_assets_rest_api",
+    "dataType": "STRING_VALUE",
+    "displayName": "cloud_assets_rest_api",
+    "inputOutputType": "IN"
+  }, {
+    "key": "Filter_Response",
+    "dataType": "STRING_VALUE",
+    "displayName": "Filter_Response",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "response_JSON",
+    "dataType": "JSON_VALUE",
+    "displayName": "response_JSON",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "`Task_12_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_12_responseHeader`",
+    "isTransient": true,
+    "producer": "1_12"
+  }, {
+    "key": "`Task_12_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_12_responseBody`",
+    "isTransient": true,
+    "producer": "1_12"
+  }, {
+    "key": "`Task_12_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_12_responseStatus`",
+    "isTransient": true,
+    "producer": "1_12"
+  }, {
+    "key": "`Task_15_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_15_responseHeader`",
+    "isTransient": true,
+    "producer": "1_15"
+  }, {
+    "key": "`Task_15_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_15_responseBody`",
+    "isTransient": true,
+    "producer": "1_15"
+  }, {
+    "key": "`Task_15_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_15_responseStatus`",
+    "isTransient": true,
+    "producer": "1_15"
+  }, {
+    "key": "cloud_resource_rest_api",
+    "dataType": "STRING_VALUE",
+    "displayName": "cloud_resource_rest_api",
+    "inputOutputType": "IN"
+  }, {
+    "key": "cloud_resource_base_url",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "https://cloudresourcemanager.googleapis.com/v1/"
+    },
+    "displayName": "cloud_resource_base_url"
+  }, {
+    "key": "org_JSON",
+    "dataType": "JSON_VALUE",
+    "displayName": "org_JSON"
+  }, {
+    "key": "organization_ID",
+    "dataType": "STRING_VALUE",
+    "displayName": "organization_ID"
+  }, {
+    "key": "`Task_22_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_22_responseHeader`",
+    "isTransient": true,
+    "producer": "1_22"
+  }, {
+    "key": "`Task_22_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_22_responseBody`",
+    "isTransient": true,
+    "producer": "1_22"
+  }, {
+    "key": "`Task_22_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_22_responseStatus`",
+    "isTransient": true,
+    "producer": "1_22"
+  }, {
+    "key": "`Task_23_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_23_responseHeader`",
+    "isTransient": true,
+    "producer": "1_23"
+  }, {
+    "key": "`Task_23_responseBody`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_23_responseBody`",
+    "isTransient": true,
+    "producer": "1_23"
+  }, {
+    "key": "`Task_23_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_23_responseStatus`",
+    "isTransient": true,
+    "producer": "1_23"
+  }, {
+    "key": "Projects_JSON_Schema",
+    "dataType": "JSON_VALUE",
+    "displayName": "Projects_JSON_Schema",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"properties\": {\n    \"results\": {\n      \"items\": {\n        \"properties\": {\n          \"assetType\": {\n            \"type\": \"string\"\n          },\n          \"organization\": {\n            \"type\": \"string\"\n          },\n          \"policy\": {\n            \"properties\": {\n              \"bindings\": {\n                \"items\": {\n                  \"properties\": {\n                    \"members\": {\n                      \"items\": {\n                        \"type\": \"string\"\n                      },\n                      \"type\": \"array\"\n                    },\n                    \"role\": {\n                      \"type\": \"string\"\n                    }\n                  },\n                  \"required\": [\"role\", \"members\"],\n                  \"type\": \"object\"\n                },\n                \"type\": \"array\"\n              }\n            },\n            \"required\": [\"bindings\"],\n            \"type\": \"object\"\n          },\n          \"project\": {\n            \"type\": \"string\"\n          },\n          \"resource\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\"resource\", \"project\", \"policy\", \"assetType\", \"organization\"],\n        \"type\": \"object\"\n      },\n      \"type\": \"array\"\n    }\n  },\n  \"required\": [\"results\"],\n  \"title\": \"Generated schema for Root\",\n  \"type\": \"object\"\n}"
+  }, {
+    "key": "ldap",
+    "dataType": "STRING_VALUE",
+    "displayName": "ldap",
+    "inputOutputType": "IN"
+  }, {
+    "key": "query_param",
+    "dataType": "STRING_VALUE",
+    "displayName": "query_param",
+    "inputOutputType": "IN"
+  }],
+  "databasePersistencePolicy": "DATABASE_PERSISTENCE_ASYNC",
+  "cloudLoggingDetails": {
+    "cloudLoggingSeverity": "CLOUD_LOGGING_SEVERITY_UNSPECIFIED",
+    "enableCloudLogging": false
+  },
+  "enableVariableMasking": true
+}
