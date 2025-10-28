@@ -52,7 +52,7 @@ gcloud services enable aiplatform.googleapis.com
 
     For the rest of this tutorial **ensure you remain in the `python/agents/gcp-asset-retriever` directory**.
 
-2. Edit `env.sh` and configure all the variables. Instructions can be found on [ENVinstructions.md] ()
+2. Edit `env.sh` and configure all the variables. Instructions can be found on the [ENVinstructions.md](https://github.com/soni-rohan/adk-samples/blob/main/python/agents/gcp-asset-retriever/ENVinstructions.md) file.
 Now source the `env.sh` file
 
 ```bash
