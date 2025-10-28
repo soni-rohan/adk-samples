@@ -19,7 +19,7 @@ To try the sample, first follow the instructions below to deploy the API specs, 
 
 1. [Provision Apigee X](https://cloud.google.com/apigee/docs/api-platform/get-started/provisioning-intro)
 2. [Provision Apigee API hub](https://cloud.google.com/apigee/docs/apihub/provision)
-3. [Provision Application Integration] (https://docs.cloud.google.com/application-integration/docs/setup-application-integration)
+3. [Provision Application Integration](https://docs.cloud.google.com/application-integration/docs/setup-application-integration)
 4. Configure [external access](https://cloud.google.com/apigee/docs/api-platform/get-started/configure-routing#external-access) for API traffic to your Apigee X instance
 5. Enable Vertex AI in your project
 6. Make sure the following tools are available in your terminal's $PATH (Cloud Shell has these preconfigured)
