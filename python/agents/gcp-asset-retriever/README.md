@@ -2,7 +2,7 @@
 
 This sample provides a set of APIs designed to act as tools for an [AI agent](https://cloud.google.com/discover/what-are-ai-agents) that retrieves information about your users IAM bindings.
 
-The agent implementation that accompanies this sample was built using Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/). The agent code can be found in the main ADK sample repo [here](https://github.com/google/adk-samples/tree/main/python/agents/auto-insurance-agent).
+The agent implementation that accompanies this sample was built using Google's [Agent Development Kit (ADK)](https://google.github.io/adk-docs/).
 
 This repo contains the following:
 
