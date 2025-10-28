@@ -10,9 +10,9 @@ This repo contains the following:
     * These APIs are imported to [Apigee API hub](https://cloud.google.com/apigee/docs/apihub/what-is-api-hub) and then referenced in the agent code using ADK's built-in [ApiHubToolset](https://google.github.io/adk-docs/tools/google-cloud-tools/#apigee-api-hub-tools). This lets agent developers easily turn any existing API from their organization's API catalog into a tool with just a few lines of code.
 2. An Apigee [Proxy](https://cloud.google.com/apigee/docs/api-platform/fundamentals/understanding-apis-and-api-proxies#whatisanapiproxy) implementation that serves the API responses to the agent.
     * This sample proxy implementation returns mock data generated using Gemini.
-3. An [Application Integration] process (https://cloud.google.com/application-integration) that connects to Google Cloud Rest APIs and queries IAM policy information. 
+3. An [Application Integration](https://cloud.google.com/application-integration) process that connects to Google Cloud Rest APIs and queries IAM policy information. 
 
-To try the sample, first follow the instructions below to deploy the API specs and proxies. Then clone the [agent implementation](https://github.com/google/adk-samples/tree/main/python/agents/auto-insurance-agent) and run it by following the instructions in that repo.
+To try the sample, first follow the instructions below to deploy the API specs, proxies, and integration. Then clone the [agent implementation](https://github.com/google/adk-samples/tree/main/python/agents/auto-insurance-agent) and run it by following the instructions in that repo.
 
 
 ## Pre-Requisites
@@ -27,6 +27,18 @@ To try the sample, first follow the instructions below to deploy the API specs a
     - unzip
     - curl
     - jq
+6. Python 3.12+
+7. Google Cloud Project with the following roles assigned
+  - Apigee Organization Admin
+  - Service Usage Consumer
+  - Logs Viewer
+8. Once you have created your project, [install the Google Cloud SDK](https://cloud.google.com/sdk/docs/install). Then run the following command to authenticate:
+```bash
+gcloud auth login
+```
+9. You also need to enable certain APIs. Run the following command to enable:
+```bash
+gcloud services enable aiplatform.googleapis.com
 
 ## (QuickStart) Setup using CloudShell
 
