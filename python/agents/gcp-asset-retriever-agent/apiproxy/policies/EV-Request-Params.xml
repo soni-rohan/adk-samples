@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="EV-Request-Params">
+  <DisplayName>Extract Scope and Ldap</DisplayName>
+  <Source>request</Source>
+  <QueryParam name="scope">
+    <Pattern ignoreCase="true">{scope_value}</Pattern>
+  </QueryParam>
+  <QueryParam name="ldap">
+    <Pattern ignoreCase="true">{ldap_value}</Pattern>
+  </QueryParam>
+  <VariablePrefix>queryinfo</VariablePrefix>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>
