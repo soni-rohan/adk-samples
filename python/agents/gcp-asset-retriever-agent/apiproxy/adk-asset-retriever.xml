@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="12" name="adk-asset-retriever">
+  <DisplayName/>
+  <Description/>
+  <CreatedAt>1761609725127</CreatedAt>
+  <LastModifiedAt>1761609725127</LastModifiedAt>
+  <BasePaths>/adk-integration-demo</BasePaths>
+  <Policies>
+    <Policy>SIR-set-integration-request</Policy>
+    <Policy>EV-Request-Params</Policy>
+  </Policies>
+  <ProxyEndpoints>
+    <ProxyEndpoint>default</ProxyEndpoint>
+  </ProxyEndpoints>
+  <IntegrationEndpoints>
+    <IntegrationEndpoint>default</IntegrationEndpoint>
+  </IntegrationEndpoints>
+</APIProxy>
