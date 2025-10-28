@@ -71,163 +71,39 @@ source ./env.sh
 ./deploy-adk-asset-retriever.sh
 ```
 
-This will not only deploy the proxy but also run the tests.
-
-Use the following GCP CloudShell tutorial, and follow the instructions.
-
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/apigee-samples&cloudshell_git_branch=main&cloudshell_workspace=.&cloudshell_tutorial=adk-auto-insurance-agent/docs/cloudshell-tutorial.md)
-
 ## Agent Setup - Part 2: Deploy Integration Process
 
-## Setup environment
-
-Ensure you have an active GCP account selected in the Cloud shell
-
+1) Navigate to the `gcp-asset-retriever` directory
 ```sh
-gcloud auth login
+cd src/gcp-asset-retriever
 ```
+2) In the Google Cloud console, go to the [Application Integration](https://console.cloud.google.com/integrations?_ga=2.161317246.2144651509.1683660420-1351281240.1683660420) page
+3) In the navigation menu, click Integrations. The Integrations List page appears.
+4) Select an existing integration or create a new integration by clicking Create integration.
+If you are creating a new integration:
+    i) Enter the name `asset-retrieval-adk` and description in the Create Integration dialog.
+    ii) Select a Region for the integration from the list of supported regions.
+    iii) Click Create.
+This opens the integration in the integration designer.
+5) In the integration designer, click `Upload/download menu` and then select `Upload integration`.
+7) In the file browser dialog, select `adk-asset-retriever.json`, and then click Open. A new version of the integration is created using the uploaded file.
+8) In the integration designer, click Test.
+9) Click Test integration. This runs the integration and displays the execution result in the Test Integration dialog.
 
-Navigate to the 'adk-auto-insurance-agent' directory in the Cloud shell.
+## Running the Agent Locally
 
-```sh
-cd adk-auto-insurance-agent
-```
+You can run the agent locally using the `adk` command in your terminal:
 
-Edit the provided sample `env.sh` file, and set the environment variables there.
+1.  To run the agent from the CLI:
 
-Then, source the `env.sh` file in the Cloud shell.
+    ```bash
+    adk run gcp-asset-retriever-agent
+    ```
 
-```sh
-source ./env.sh
-```
+2.  To run the agent from the ADK web UI:
 
-## Deploy Apigee configurations
+    ```bash
+    adk web
+    ```
+    Then select the `gcp-asset-retriever-agent` from the dropdown.
 
-Next, let's deploy the sample to Apigee. Just run
-
-```bash
-./deploy-adk-auto-insurance-agent.sh
-```
-
-Export the `APIKEY` variable as mentioned in the command output
-
-## Verification
-
-You can test the sample with the following curl commands:
-
-### To access Rewards API
-
-#### List Rewards:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/rewards" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-### To access Claims API
-
-#### Get Claim:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/claims/31432" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### List Claims:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/claims" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### Create Claim:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/claims" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY" \
---data '{"description": "Hail storm","location": "Mountain View, CA","memberId": "12345","reason": "HAIL_DAMAGE","vehicle": "Toyota Camry"}'
-```
-
-#### Delete Claim:
-
-```sh
-curl --location --request DELETE "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/claims/12345" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-### To access Members API
-
-#### Get Member:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/members/31432" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### List Members:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/members" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### Create Member:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/members" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY" \
---data '{"firstName": "John","lastName": "Doe","email": "john.doe@example.com","phoneNumber": "555-123-4567","address": "123 Highland Dr","city": "Some Creek","state": "GA","zip": "30303"}'
-```
-
-#### Delete Member:
-
-```sh
-curl --location --request DELETE "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/members/12345" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-### To access Roadside Assistance API
-
-#### Get Tow:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/tows/31432" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### List Tows:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/tows" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-#### Create Tow:
-
-```sh
-curl --location "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/tows" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY" \
---data '{"memberId": "12345","location": "Mountain View, CA"}'
-```
-
-#### Delete Tow:
-
-```sh
-curl --location --request DELETE "https://$APIGEE_HOST/v1/samples/adk-cymbal-auto/tows/45345" \
---header "Content-Type: application/json" \
---header "x-apikey: $APIKEY"
-```
-
-Once its deployed, you can follow the steps in the [README](https://github.com/GoogleCloudPlatform/adk-samples/tree/main/python/agents/auto-insurance-agent) to configure and run the agent.
