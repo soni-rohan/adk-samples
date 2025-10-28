@@ -39,12 +39,45 @@ gcloud auth login
 9. You also need to enable certain APIs. Run the following command to enable:
 ```bash
 gcloud services enable aiplatform.googleapis.com
+```
+## Agent Setup - Part 1: Deploy API Proxy 
 
-## (QuickStart) Setup using CloudShell
+1.  Clone the repository:
+
+    ```bash
+    git clone https://github.com/soni-rohan/adk-samples.git
+    cd python/agents/gcp-asset-retriever
+    ```
+
+    For the rest of this tutorial **ensure you remain in the `python/agents/gcp-asset-retriever` directory**.
+
+2. Edit `env.sh` and configure the following variables:
+
+* `PROJECT_ID` the project where your Apigee organization is located
+* `APIGEE_HOST` the externally reachable hostname of the Apigee environment group that contains APIGEE_ENV
+* `APIGEE_ENV` the Apigee environment where the demo resources should be created
+* `APIGEE_APIHUB_PROJECT_ID` the project where your Apigee organization is located (same as project ID) 
+* `APIGEE_APIHUB_REGION` the region where your API Hub is located
+
+Now source the `env.sh` file
+
+```bash
+source ./env.sh
+```
+
+3. Deploy Apigee API proxy
+
+``` bash
+./deploy-adk-asset-retriever.sh
+```
+
+This will not only deploy the proxy but also run the tests.
 
 Use the following GCP CloudShell tutorial, and follow the instructions.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/GoogleCloudPlatform/apigee-samples&cloudshell_git_branch=main&cloudshell_workspace=.&cloudshell_tutorial=adk-auto-insurance-agent/docs/cloudshell-tutorial.md)
+
+## Agent Setup - Part 2: Deploy Integration Process
 
 ## Setup environment
 
