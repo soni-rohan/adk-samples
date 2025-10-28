@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SetIntegrationRequest continueOnError="false" enabled="true" name="SIR-set-integration-request">
+  <DisplayName>SIR-Set Integration Request</DisplayName>
+  <ProjectId>apigee-demo-468318</ProjectId>
+  <IntegrationName>asset-retrieval-adk</IntegrationName>
+  <IntegrationRegion>us-east1</IntegrationRegion>
+  <ApiTrigger>api_trigger/asset-retrieval-adk</ApiTrigger>
+  <Parameters>
+    <Parameter name="authorization" type="string" ref="request.header.authorization"/>
+    <Parameter name="function" type="string" ref="current.flow.name"/>
+    <Parameter name="scope" type="string" ref="queryinfo.scope_value"/>
+    <Parameter name="ldap" type="string" ref="queryinfo.ldap_value"/>
+  </Parameters>
+</SetIntegrationRequest>
